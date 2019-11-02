@@ -1,0 +1,119 @@
+%
+% @author   Shmish  "shmish90@gmail.com"
+% @legal    MIT     "(c) Christopher Schmitt"
+%
+
+
+\documentclass{article}
+
+
+%
+% Document Imports
+%
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{algpseudocode}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{forest}
+\usepackage{listings}
+
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+\lstset{
+  frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\tiny\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+%
+% Document Configuation
+%
+
+\newcommand{\hwAuthor}{Christopher Schmitt}
+\newcommand{\hwSubject}{CS 253}
+\newcommand{\hwSection}{Section 02}
+\newcommand{\hwSemester}{Fall 2019}
+\newcommand{\hwAssignment}{Assignment 3}
+
+
+%
+% Document Enviornments
+%
+
+\setlength{\headheight}{65pt}
+\pagestyle{fancy}
+\lhead{\hwAuthor}
+\rhead{
+  \hwSubject \\
+  \hwSection \\
+  \hwSemester \\
+  \hwAssignment
+}
+
+\newenvironment{problem}[1]{
+  \nobreak\section*{Problem #1}
+}{}
+
+
+%
+% Document Start
+%
+
+\begin{document}
+  \begin{center}
+    \begin{forest}
+      [H
+        [F
+          [E
+            [C
+              [$\emptyset$]
+              [B
+                [$\emptyset$]
+                [A]
+              ]
+            ]
+            [D]
+          ]
+          [$\emptyset$]
+        ]
+        [G
+          [I]
+          [J
+            [K]
+            [$\emptyset$]
+          ]
+        ]
+      ]
+    \end{forest}
+  \end{center}
+  By observing the postorder and inorder sequences, the origanl binary tree can
+  be reconstructed.  H will be the root node, as it is the last element od the
+  postorder set.  Everything to the right of H in the inorder set must be to
+  the right of H in the tree.  Likewise, everything on the left of H in the
+  inorder set must be to the left of H in the tree.  The inorder set can now be
+  split into two sets, and the entire process can recur on the two sub-sets.
+\end{document}

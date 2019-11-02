@@ -1,0 +1,169 @@
+%
+% @author   Shmish  "shmish90@gmail.com"
+% @legal    MIT     "(c) Christopher Schmitt"
+%
+
+
+\documentclass{article}
+
+
+%
+% Document Imports
+%
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{algpseudocode}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{forest}
+\usepackage{listings}
+
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+\lstset{
+  frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\tiny\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+%
+% Document Configuation
+%
+
+\newcommand{\hwAuthor}{Christopher Schmitt}
+\newcommand{\hwSubject}{CS 253}
+\newcommand{\hwSection}{Section 02}
+\newcommand{\hwSemester}{Fall 2019}
+\newcommand{\hwAssignment}{Assignment 2}
+
+
+%
+% Document Enviornments
+%
+
+\setlength{\headheight}{65pt}
+\pagestyle{fancy}
+\lhead{\hwAuthor}
+\rhead{
+  \hwSubject \\
+  \hwSection \\
+  \hwSemester \\
+  \hwAssignment
+}
+
+\newenvironment{problem}[1]{
+  \nobreak\section*{Problem #1}
+}{}
+
+
+%
+% Document Start
+%
+
+\begin{document}
+  \begin{problem}{1}
+    \begin{center}
+      \begin{algorithmic}[1]
+        \State $X \gets N$
+        \Repeat
+          \State $Y \gets N$
+          \While{$Y > 0$}
+            \State $\dots$
+            \State $Y \gets Y - 1$
+          \EndWhile
+          \State $X \gets X + X$
+        \Until{$X > N \times N$}
+      \end{algorithmic}
+    \end{center}
+    The innermost statements are trivially $\mathcal{O}(1)$.  The innermost
+    while loop is linear, as it goes form $n$ to $0$ ($\mathcal{O}(n)$).  The
+    outhermost loop is $\mathcal{O}(\log_2(2n^2))$.  This makes the final
+    complexity $\mathcal{O}(n \times \log_2(2n^2))$ or $\mathcal{O}(n\log{n})$.
+    Substituting $n$ for $1000$ gives $80000$ itterations.  Each itteration takes
+    a total of $4$ microseconds plus $2$ milliseconds which is $2.004$ ms.
+    $80000(2.004)=160320$.  This means that thiss operation takes $160320$ ms
+    when $n = 1000$.
+  \end{problem}
+
+  \begin{problem}{2}
+    \begin{table}[htbp]
+      \caption{\label{tab:table-1}Toy Data (0-9)}
+      \resizebox{\textwidth}{!}{
+        \begin{tabular}{lrrrrrr}
+          \rowcolor[HTML]{FFFFFF} & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}Best Case} & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}Average Case} & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}Worst Case} \\
+          \rowcolor[HTML]{FFFFFF} Algorithm & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Exchanges} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Comparisons} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Exchanges} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Comparisons} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Exchanges} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Comparisons} \\ \hline
+          \rowcolor[HTML]{FFFFFF} Bubble Sort    & 0  & 9   & 20  & 43 & 45 & 45 \\
+          \rowcolor[HTML]{EFEFEF} Selection Sort & 9  & 45  & 9   & 45 & 9  & 45 \\
+          \rowcolor[HTML]{FFFFFF} Insertion Sort & 0  & 10  & 20  & 30 & 45 & 55 \\
+          \rowcolor[HTML]{EEEEEE} Merge Sort     & 24 & 40  & 32  & 56 & 28 & 48 \\
+          \rowcolor[HTML]{FFFFFF} Radix Sort     & 40 & 0   & 40  & 0  & 40 & 0
+        \end{tabular}
+      }
+    \end{table}
+
+    \begin{table}[htbp]
+      \caption{\label{tab:table-2}Test Data (0-1999)}
+      \resizebox{\textwidth}{!}{
+        \begin{tabular}{lrrrrrr}
+          \rowcolor[HTML]{FFFFFF} & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}Best Case} & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}Average Case} & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}Worst Case} \\
+          \rowcolor[HTML]{FFFFFF} Algorithm & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Exchanges} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Comparisons} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Exchanges} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Comparisons} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Exchanges} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Comparisons} \\ \hline
+          \rowcolor[HTML]{FFFFFF} Bubble Sort    & 0     & 1999    & 1004333 & 1997649 & 1999000 & 1999000 \\
+          \rowcolor[HTML]{EFEFEF} Selection Sort & 1999  & 1999000 & 1999    & 1999000 & 1999    & 1999000 \\
+          \rowcolor[HTML]{FFFFFF} Insertion Sort & 0     & 2000    & 1004333 & 1006333 & 1999000 & 2001000 \\
+          \rowcolor[HTML]{EEEEEE} Merge Sort     & 12863 & 23728   & 21430   & 40862   & 13087   & 24176   \\
+          \rowcolor[HTML]{FFFFFF} Radix Sort     & 20000 & 0       & 20000   & 0       & 20000   & 0
+        \end{tabular}
+      }
+    \end{table}
+
+    \par
+    Radix sort can be modified to work with string objects.  All that is
+    required for radix sort is that it's items be able to be interpreted as
+    ordinals.  One could, for example, convert each unique string into a unique
+    ordinal by using its Base64 representation and them performing the same
+    radix sort with a radix of $64$ instead of $10$.  This would create a large
+    amount of "buckets" in memory, but would be functionally equivilant to the
+    standard integer radix sort.
+
+    \par
+    An analysis of merge sort reveals a complexity of $\mathcal{O}(n\log{n})$
+    for worst case, average case, and best case.  This should perform
+    significantly better than the $\mathcal{O}(n^2)$ class sorting algorithms
+    like selection and insertion sort.  However, due to implenetation specific
+    details (like using a tree of recursive calls and array copies), this
+    implementation requires a significant number of operations.  It should also
+    be noted that the "worst case" file does not represent the worst case for
+    merge sort, as reverse order will not maximize the number of exchanges
+    performed by the algorithm.  Radix sort is a rather interesting algorithm 
+    as it is not sensitive to its input.  It has no true "worst case" and
+    operates without using any comparisions by sorting elements into "buckets"
+    by their digits.  It has a complexity of $\mathcal{O}(Kn)$, where K is the
+    number of digits needed to represent the largest element in the array. In
+    this case it would be $\log{L}$, where $L$ is the largest element.  This
+    means that radix sort will take the same number of steps, regardless of
+    input.  This is reflected by the data.
+  \end{problem}
+\end{document}
