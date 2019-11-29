@@ -1,0 +1,351 @@
+%
+% @author   Shmish  "shmish90@gmail.com"
+% @legal    MIT     "(c) Christopher Schmitt"
+%
+
+
+\documentclass{article}
+
+
+%
+% Document Imports
+%
+
+\usepackage{fancyhdr}
+\usepackage{extramarks}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{algpseudocode}
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{color}
+\usepackage{tikz}
+\usepackage{forest}
+\usepackage{listings}
+
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+\lstset{
+  frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\tiny\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+%
+% Document Configuation
+%
+
+\newcommand{\hwAuthor}{Christopher Schmitt}
+\newcommand{\hwSubject}{CS 253}
+\newcommand{\hwSection}{Section 02}
+\newcommand{\hwSemester}{Fall 2019}
+\newcommand{\hwAssignment}{Assignment 4}
+
+
+%
+% Document Enviornments
+%
+
+\setlength{\headheight}{65pt}
+\pagestyle{fancy}
+\lhead{\hwAuthor}
+\rhead{
+  \hwSubject \\
+  \hwSection \\
+  \hwSemester \\
+  \hwAssignment
+}
+
+\newenvironment{problem}[1]{
+  \nobreak\section*{Problem #1}
+}{}
+
+
+%
+% Document Start
+%
+
+\begin{document}
+  \begin{problem}{1}
+    \begin{table}[htbp]
+      \caption{\label{tab:table-1}Toy Data (0-9)}
+      \resizebox{\textwidth}{!}{
+        \begin{tabular}{lrrrrrr}
+          \rowcolor[HTML]{FFFFFF} & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}Best Case} & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}Average Case} & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}Worst Case} \\
+          \rowcolor[HTML]{FFFFFF} Algorithm & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Exchanges} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Comparisons} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Exchanges} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Comparisons} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Exchanges} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Comparisons} \\ \hline
+          \rowcolor[HTML]{FFFFFF} Bubble Sort    & 0  & 9   & 20  & 43 & 45 & 45 \\
+          \rowcolor[HTML]{EFEFEF} Selection Sort & 9  & 45  & 9   & 45 & 9  & 45 \\
+          \rowcolor[HTML]{FFFFFF} Insertion Sort & 0  & 10  & 20  & 30 & 45 & 55 \\
+          \rowcolor[HTML]{EEEEEE} Merge Sort     & 24 & 40  & 32  & 56 & 28 & 48 \\
+          \rowcolor[HTML]{FFFFFF} Radix Sort     & 40 & 0   & 40  & 0  & 40 & 0  \\
+          \rowcolor[HTML]{EEEEEE} Heap Sort      & 21 & 30  & 18  & 30 & 12 & 30
+        \end{tabular}
+      }
+    \end{table}
+
+    \begin{table}[htbp]
+      \caption{\label{tab:table-2}Test Data (0-1999)}
+      \resizebox{\textwidth}{!}{
+        \begin{tabular}{lrrrrrr}
+          \rowcolor[HTML]{FFFFFF} & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}Best Case} & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}Average Case} & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}Worst Case} \\
+          \rowcolor[HTML]{FFFFFF} Algorithm & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Exchanges} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Comparisons} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Exchanges} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Comparisons} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Exchanges} & \multicolumn{1}{c}{\cellcolor[HTML]{FFFFFF}Comparisons} \\ \hline
+          \rowcolor[HTML]{FFFFFF} Bubble Sort    & 0     & 1999    & 1004333 & 1997649 & 1999000 & 1999000 \\
+          \rowcolor[HTML]{EFEFEF} Selection Sort & 1999  & 1999000 & 1999    & 1999000 & 1999    & 1999000 \\
+          \rowcolor[HTML]{FFFFFF} Insertion Sort & 0     & 2000    & 1004333 & 1006333 & 1999000 & 2001000 \\
+          \rowcolor[HTML]{EEEEEE} Merge Sort     & 12863 & 23728   & 21430   & 40862   & 13087   & 24176   \\
+          \rowcolor[HTML]{FFFFFF} Radix Sort     & 20000 & 0       & 20000   & 0       & 20000   & 0       \\
+          \rowcolor[HTML]{EEEEEE} Heap Sort      & 19301 & 6000    & 18190   & 6000    & 16709   & 6000
+        \end{tabular}
+      }
+    \end{table}
+
+    Like merge sort, heap sort runs in $\mathcal{O}(n\log{n})$.  It is similar
+    to selection sort in the sense that we find the maximal element and place
+    it at the end of the list.  We can then repeat this process untill the
+    entire collection is sorted.  This is made effecient by the underlying heap,
+    which can be recomputed in $\mathcal{0}(\log{n})$ operations.  Since this
+    needs to happen once for each element that needs to be sorted, we get
+    $\mathcal{O}(n\log{n})$.
+
+    Merge sort exhibits good performance characteristics when the data is
+    in order, or close to in-order.  Heap sort shows superior characteristics
+    for both average data and reverse ordered data.  It should be noted
+    however, that when dealing with data at this small scale, most of these
+    algorithms will do fine.  When dealing with larger sets, merge sort can take
+    the most advantage of multiple threads of execution.  We can safely do this
+    since array forms a monoid (with an empty array serving as the identety value).
+    Since monoids obey right-identety, left-identety, and accociativity rules,
+    each thread can operate on a sub-array independently and can be recombined
+    safely at the end of the operation.
+  \end{problem}
+
+  \begin{problem}{2}
+    Constructing the AVL tree
+    \begin{center}
+      \begin{forest}
+        [10]
+      \end{forest}
+    \end{center}
+
+    \begin{center}
+      \begin{forest}
+        [10
+          []
+          [20]
+        ]
+      \end{forest}
+    \end{center}
+
+    \begin{center}
+      \begin{forest}
+        [20
+          [10]
+          [30]
+        ]
+      \end{forest}
+    \end{center}
+
+    \begin{center}
+      \begin{forest}
+        [20
+          [10]
+          [30
+            [25]
+            []
+          ]
+        ]
+      \end{forest}
+    \end{center}
+
+    \begin{center}
+      \begin{forest}
+        [20
+          [10]
+          [27
+            [25]
+            [30]
+          ]
+        ]
+      \end{forest}
+    \end{center}
+
+    \begin{center}
+      \begin{forest}
+        [20
+          [10
+            [7]
+            []
+          ]
+          [27
+            [25]
+            [30]
+          ]
+        ]
+      \end{forest}
+    \end{center}
+
+    \begin{center}
+      \begin{forest}
+        [20
+          [7
+            [4]
+            [10]
+          ]
+          [27
+            [25
+              [23]
+              []
+            ]
+            [30]
+          ]
+        ]
+      \end{forest}
+    \end{center}
+
+    \begin{center}
+      \begin{forest}
+        [20
+          [7
+            [4]
+            [10]
+          ]
+          [27
+            [25
+              [23]
+              [26]
+            ]
+            [30]
+          ]
+        ]
+      \end{forest}
+    \end{center}
+
+    \begin{center}
+      \begin{forest}
+        [20
+          [7
+            [4]
+            [10]
+          ]
+          [25
+            [23
+              [21]
+              []
+            ]
+            [27
+              [26]
+              [30]
+            ]
+          ]
+        ]
+      \end{forest}
+    \end{center}
+
+    Removing elements from the tree
+    \begin{center}
+      \begin{forest}
+        [20
+          [7
+            [4]
+            [10]
+          ]
+          [25
+            [23
+              [21]
+              []
+            ]
+            [27
+              [26]
+              []
+            ]
+          ]
+        ]
+      \end{forest}
+    \end{center}
+
+    \begin{center}
+      \begin{forest}
+        [20
+          [7
+            [4]
+            [10]
+          ]
+          [25
+            [26]
+            [23
+              [21]
+              []
+            ]
+          ]
+        ]
+      \end{forest}
+    \end{center}
+
+    \begin{center}
+      \begin{forest}
+        [20
+          [7
+            [4]
+            [10]
+          ]
+          [23
+            [21]
+            [25]
+          ]
+        ]
+      \end{forest}
+    \end{center}
+
+    Binary search tree
+    \begin{center}
+      \begin{forest}
+        [10
+          [7
+            [4]
+            []
+          ]
+          [20
+            []
+            [30
+              [25
+                [23
+                  [21]
+                  []
+                ]
+                [27
+                  [26]
+                  []
+                ]
+              ]
+              []
+            ]
+          ]
+        ]
+      \end{forest}
+    \end{center}
+
+    This tree is severly unbalanced, and will therefore exhibit worse performance
+    characteristics (in search) to the AVL tree.  The ballance of the binary search
+    tree is determined entirely by the order of the inputs.  The AVL tree however,
+    has a mechanism to preserve the balance of the tree, ensuring search effecincy
+    near $\mathcal{O}\log{n}$.
+  \end{problem}
+\end{document}
