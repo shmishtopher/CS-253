@@ -15,3 +15,7 @@ can be found in the corresponding directory.
 * Assignment 003
   - [TeX File](https://github.com/shmishtopher/CS-253/blob/master/Assignment_003/report.tex)
   - [PDF File](https://github.com/shmishtopher/CS-253/blob/master/Assignment_003/report.pdf)
+
+* Assignment 004
+  - [TeX File](https://github.com/shmishtopher/CS-253/blob/master/Assignment_004/report.tex)
+  - [PDF File](https://github.com/shmishtopher/CS-253/blob/master/Assignment_004/report.pdf)
