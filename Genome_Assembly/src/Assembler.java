@@ -10,14 +10,21 @@ import java.util.Random;
 import debruijn.DeBruijnGraph;
 import genomics.KMer;
 
+
+/**
+ * The assembler driver class reads in the refrence genome and tests the
+ * algorithm by attemting to assembe random segments of the refrence genome.
+ * The HIV-1 refrence genome is used here for testing.
+ */
 public class Assembler {
   public static void main(String[] args) throws IOException {
 
-    // Read file into string buffer
+    // Read refrence genome into string buffer
     String genome = new String(Files.readAllBytes(Paths.get("refrence.genome"))).replace("\n", "").replace("\r", "");
     Random rand = new Random(73);
     List<Pair<Integer, Integer>> points = new ArrayList<Pair<Integer, Integer>>();
     
+    // Run 30 trials for each genome length 10 to 4000
     for (int genomeSize = 10; genomeSize < 400; genomeSize += 1) {
       for (int trial = 0; trial < 20; trial += 1) {
         int offset = rand.nextInt(5000);
@@ -45,6 +52,7 @@ public class Assembler {
     }
 
 
+    // Write data to file to use later
     File file = new File("append.txt");
     FileWriter fr = new FileWriter(file, true);
     BufferedWriter br = new BufferedWriter(fr);
@@ -58,6 +66,14 @@ public class Assembler {
   }
 
 
+  /**
+   * Reads the graph as a sequence by computing the eulerian path, taking the
+   * first item, and then appending the last letter of each succsessive element
+   * in the eulerian path.
+   * 
+   * @param graph the eulerian graph to read
+   * @return A string representing the sequence read from the eulerian circuit
+   */
   static String readGraph(DeBruijnGraph<KMer> graph) {
     List<String> eulerianPath = graph.computeEulerianPath();
     String head = eulerianPath.get(0);
@@ -81,6 +97,10 @@ public class Assembler {
   }
 
 
+  /**
+   * A generic pair class, which joins types T and U into a single pair.
+   * This is used to represent (x, y) pairs in the driver class.
+   */
   private static class Pair<T, U> {
     public T lhs;
     public U rhs;

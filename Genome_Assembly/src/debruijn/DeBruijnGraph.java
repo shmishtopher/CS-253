@@ -8,6 +8,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
+/**
+ * De Briujn Graph - A De Bruijn graph implementation.  This implementation uses
+ * a linked representation for the graph. The `graph` private member maps nodes
+ * to their adjacent neighbors.  the `nodes` private member maps prefixs and
+ * suffixs to their representativ nodes. 
+ * NOTE: To improve efficiency, unique nodes are identified by their hashcode.
+ * Any two generic types T must return the same hash code when they encapsulate
+ * the same sequence.  
+ * @param <T> - A sequence with a prefix and suffix.
+ */
 public class DeBruijnGraph<T extends Splittable<T>> {
   private Map<Node, List<Node>> graph;
   private Map<T, Node> nodes;
@@ -21,6 +31,12 @@ public class DeBruijnGraph<T extends Splittable<T>> {
   }
 
 
+  /**
+   * If the graph is eulerian (if it has a valid eulerian walk) then perform
+   * the eulerain walk over the graph by picking an selecting the head (the
+   * element with exactly one more outbound connection than inbound connections)
+   * and then traces out the eulerian path.
+   */
   public List<String> computeEulerianPath() {
     Node head = null;
     Node last = null;
@@ -70,6 +86,15 @@ public class DeBruijnGraph<T extends Splittable<T>> {
   }
 
 
+  /**
+   * recursively traverse the graph, starting from the node labled "start".
+   * adjacent nodes are unordered and are given no prefrence during their
+   * traversal.
+   * 
+   * @param start - The node to begin traversal at
+   * @param list - the current walk
+   * @return the final eulerian circuit
+   */
   private List<Node> traverse(Node start, List<Node> list) {
     List<Node> edges = graph.get(start);
 
@@ -83,6 +108,15 @@ public class DeBruijnGraph<T extends Splittable<T>> {
   }
 
 
+  /**
+   * Insert a sequence into the graph.  Nodes are first constructed out of
+   * the prefix and sufix of the sequence.  If these nodes already exist in
+   * the graph, no new nodes are created.  if either of these nodes do not
+   * already exist in the graph, then they are created and added to the graph.
+   * The prefix and the suffix are joined by a directed edge going from the
+   * prefix -> suffix
+   * @param sequence
+   */
   public void insertSequence(T sequence) {
     if (sequence.size() == length) {
       T prefix = sequence.getPrefix();
@@ -119,6 +153,11 @@ public class DeBruijnGraph<T extends Splittable<T>> {
   }
 
 
+  /**
+   * Node is the representation of a prefix or suffix in the De Bruijn graph.
+   * The hash code of any node is the same as the hash code of the undrlying
+   * sequence.
+   */
   private class Node {
     private T internal;
     public int inbound;
